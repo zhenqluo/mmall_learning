@@ -1,0 +1,38 @@
+*.class
+
+#package file
+# *.jar 为什么没有配?因为后续对接支付宝的时候,支付宝提供的jdk的jar包要提到仓库里,
+#因为支付宝的jar包在Maven仓库里是没有的,除非使用私库,把支付宝的jar包提交到私库里。
+#后面需要把支付宝的jar包放到lib文件夹里提交到远程仓库,那会造成其他jar包被提交到远程
+#仓库吗?不会。因为其它其它由Maven引入的jar包是放到本地仓库的,不是在mmall这个git项目中
+*.war
+*.ear
+
+#kdiff3 ignore
+*.orig
+
+#maven ignore
+target/
+
+#eclipse igonre
+.settings/
+.project
+.classpatch
+
+#idea
+.idea/
+/idea/
+*.ipr
+*.iml
+*.iws
+
+#temp file
+*.log
+*.cache
+*.diff
+*.patch
+*.tmp
+
+#system ignore
+.DS_Store
+Thumbs.db
