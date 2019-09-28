@@ -23,11 +23,13 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public ServerResponse<User> login(String userName, String password) {
+        System.out.println(userName+" "+password);
         int resultCount=userMapper.checkUserName(userName);
         if(resultCount==0){
             return ServerResponse.createByErrorMessage("用户不存在");
         }
         //注册的时候密码是用MD5加密的,这里也要用MD5
+        System.out.println(MD5Util.MD5EncodeUtf8(password));
         String MD5Password = MD5Util.MD5EncodeUtf8(password);
         User user=userMapper.selectLogin(userName,MD5Password);
         if(user==null){
@@ -181,7 +183,15 @@ public class UserServiceImpl implements IUserService {
     }
 
 
-
+    //backend
+    //校验是否是管理员
+    public ServerResponse checkAdminRole(User user){
+        if(user != null && user.getRole().intValue()==Const.Role.ROLE_ADMIN){
+            return ServerResponse.createBySuccess();
+        }else {
+            return ServerResponse.createByError();
+        }
+    }
 
 
 

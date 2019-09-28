@@ -37,7 +37,7 @@ public class ServerResponse<T> implements Serializable {
         return this.msg;
     }
     public T getData(){
-        return this.getData();
+        return this.data;
     }
     @JsonIgnore
     //使之不在json序列化结果当中

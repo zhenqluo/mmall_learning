@@ -10,13 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 
 /**
  * Created by wuyuanyan on 2019/9/24.
  */
-@Controller
+@RestController
 @RequestMapping("/user/")
 //Controller接收用户请求,调用service层方法获取响应数据
 public class UserController {
@@ -25,7 +26,7 @@ public class UserController {
     private IUserService iUserService;
 
     @RequestMapping(value = "login.do",method = RequestMethod.POST)
-    @ResponseBody
+    //@ResponseBody
     public ServerResponse<User> login(String userName, String password, HttpSession session){
         //service->mybtis->dao
         ServerResponse<User> response = iUserService.login(userName,password);
@@ -36,26 +37,26 @@ public class UserController {
     }
 
     @RequestMapping(value="logout.do",method = RequestMethod.GET)
-    @ResponseBody
+    //@ResponseBody
     public ServerResponse<String> logout(HttpSession session){
         session.removeAttribute(Const.CURRENT_USER);
         return ServerResponse.createBySuccess();
     }
 
     @RequestMapping(value="register.do",method = RequestMethod.POST)
-    @ResponseBody
+    //@ResponseBody
     public ServerResponse<String> register(User user){
         return iUserService.register(user);
     }
 
     @RequestMapping(value="check_valid.do",method = RequestMethod.POST)
-    @ResponseBody
+    //@ResponseBody
     public ServerResponse<String> chekValid(String str,String type){
         return iUserService.checkValid(str,type);
     }
 
     @RequestMapping(value="get_user_info.do",method = RequestMethod.POST)
-    @ResponseBody
+    //@ResponseBody
     public ServerResponse<User> getUserInfo(HttpSession session){
         User user=(User) session.getAttribute(Const.CURRENT_USER);
         if(user!=null){
@@ -65,13 +66,13 @@ public class UserController {
     }
 
     @RequestMapping(value="forget_get_question.do",method = RequestMethod.POST)
-    @ResponseBody
+    //@ResponseBody
     public ServerResponse<String> forgetGetQuestion(String userName){
         return iUserService.selectQuestion(userName);
     }
 
     @RequestMapping(value="forget_check_answer.do",method = RequestMethod.POST)
-    @ResponseBody
+    //@ResponseBody
     public  ServerResponse<String> forgetCheckAnswer(String name,String question,String answer){
         return iUserService.checkAnswer(name,question,answer);
     }
@@ -93,7 +94,7 @@ public class UserController {
     }
 
     @RequestMapping(value="update_information.do",method = RequestMethod.POST)
-    @ResponseBody
+    //@ResponseBody
     //更新完用户信息后,我们要把新的用户信息放到session,同时返回给前端进行展示,所以泛型使用User
     public ServerResponse<User> update_information(HttpSession session,User user){
         User currentUser=(User) session.getAttribute(Const.CURRENT_USER);
@@ -111,7 +112,7 @@ public class UserController {
     }
 
     @RequestMapping(value="get_information.do",method = RequestMethod.POST)
-    @ResponseBody
+    //@ResponseBody
     //如果调用这个接口没有登录,要进行强制登录,跟前端约定,code=10的时候,前端就要强制登录
     public ServerResponse<User> get_information(HttpSession session){
         User currentUser=(User) session.getAttribute(Const.CURRENT_USER);
